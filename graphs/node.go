@@ -53,3 +53,20 @@ func (n *Node) NeighboursMaxDistance(maxDistance int) []*Node {
 	}
 	return neighbours
 }
+
+// CanReachLabel_MaxDepth expects a label and a maximal search depth.
+// returns true if a node with that label is reachable.
+func (n *Node) CanReachLabel_MaxDepth(label string, maxDepth int) bool {
+	if label == n.Label {
+		return true
+	}
+	if maxDepth == 0 {
+		return false
+	}
+	for _, e := range n.Edges {
+		if e.To.CanReachLabel_MaxDepth(label, maxDepth-1) {
+			return true
+		}
+	}
+	return false
+}
