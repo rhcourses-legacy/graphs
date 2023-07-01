@@ -7,8 +7,9 @@ type Edge struct {
 }
 
 // NewEdge creates a new Edge.
-func NewEdge(to *Node) *Edge {
-	return &Edge{To: to}
+// It expects a label and creates a new node with that label.
+func NewEdge(label string) *Edge {
+	return &Edge{To: NewNode(label)}
 }
 
 // IsValid checks if the internal Node pointer is set.
