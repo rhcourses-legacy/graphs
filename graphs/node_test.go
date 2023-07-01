@@ -76,3 +76,46 @@ func TestNode_AddNeighbour(t *testing.T) {
 		t.Errorf("Expected 2 neighbours, got %d", n.NeighbourCount())
 	}
 }
+
+// TestNode_NeighboursMaxDistance tests the NeighboursMaxDistance method.
+func TestNode_NeighboursMaxDistance(t *testing.T) {
+	n := NewNode("A")
+	n.AddNeighbour("B")
+	n.AddNeighbour("C")
+
+	B := n.GetNeighbour("B")
+	B.AddNeighbour("D")
+	B.AddNeighbour("E")
+
+	C := n.GetNeighbour("C")
+	C.AddNeighbour("F")
+	C.AddNeighbour("G")
+
+	result1 := n.NeighboursMaxDistance(1)
+	expectedLabels1 := []string{"B", "C"}
+	if !compareLabels(result1, expectedLabels1) {
+		t.Errorf("Expected %v, got %v", expectedLabels1, result1)
+	}
+
+	result2 := n.NeighboursMaxDistance(2)
+	// Anmerkung: Die Reihenfolge kann je nach Implementierung auch anders sein.
+	//            Wie wäre es lösbar, dass dies dem Test egal ist?
+	expectedLabels2 := []string{"B", "D", "E", "C", "F", "G"}
+	if !compareLabels(result2, expectedLabels2) {
+		t.Errorf("Expected %v, got %v", expectedLabels2, result2)
+	}
+}
+
+// compareLabels compares the labels of a slice of nodes to a slice of strings.
+// It returns true if the labels are equal, false otherwise.
+func compareLabels(nodes []*Node, labels []string) bool {
+	if len(nodes) != len(labels) {
+		return false
+	}
+	for i, n := range nodes {
+		if n.Label != labels[i] {
+			return false
+		}
+	}
+	return true
+}

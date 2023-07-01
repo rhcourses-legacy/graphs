@@ -41,3 +41,15 @@ func (n *Node) AddNeighbour(label string) {
 	}
 	n.Edges = append(n.Edges, *NewEdge(label))
 }
+
+// NeighboursMaxDistance returns all neighbours of a node with a distance of at most maxDistance.
+func (n *Node) NeighboursMaxDistance(maxDistance int) []*Node {
+	neighbours := []*Node{}
+	for _, e := range n.Edges {
+		neighbours = append(neighbours, e.To)
+		if maxDistance > 1 {
+			neighbours = append(neighbours, e.To.NeighboursMaxDistance(maxDistance-1)...)
+		}
+	}
+	return neighbours
+}
