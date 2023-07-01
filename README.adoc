@@ -1,1 +1,11 @@
 = Graphen
+
+Im Package graphs sind Datentypen für Knoten und Kanten in Graphen definiert.
+
+== Weitere Aufgaben
+
+* Tests erweitern, so dass die Funktionen mit Graphen geprüft werden, die Kreise enthalten.
+  Funktionen anpassen, so dass immer noch alles funktioniert.
+* Knoten suchen, die mindestens n Nachbarn haben.
+* Erreichbarkeit verallgemeinern (ohne maximale Tiefe).
+* (Kürzeste) Wege suchen.
