@@ -1,6 +1,9 @@
 package graphs
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 // Helper struct encapsulating a *testing.T object.
 // Provides methods for checking graph properties.
@@ -72,6 +75,15 @@ func (gt *GraphTester) assertNodesHaveLabels(nodes []*Node, expectedlabels ...st
 			gt.t.Errorf("Expected labels %v, got %v", expectedlabels, actuallabels)
 			return
 		}
+	}
+}
+
+// assertNodesEqual expects a list of nodes and some more node parameters.
+// Checks that the list matches the given nodes.
+// Produces a test failure if not.
+func (gt *GraphTester) assertNodesEqual(actualnodes []*Node, expectednodes ...*Node) {
+	if !reflect.DeepEqual(actualnodes, expectednodes) {
+		gt.t.Errorf("Expected nodes %v, got %v", expectednodes, actualnodes)
 	}
 }
 

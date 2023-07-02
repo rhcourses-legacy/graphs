@@ -58,7 +58,24 @@ func (n *Node) NeighboursMaxDistance(maxDistance int) []*Node {
 			neighbours = append(neighbours, e.To.NeighboursMaxDistance(maxDistance-1)...)
 		}
 	}
-	return neighbours
+
+	/* Zusatzanforderung aus den Tests mit Graphen, die Kreise enthalten:
+	 * Duplikate entfernen!
+	 */
+	result := []*Node{}
+	for _, neighbour := range neighbours {
+		duplicate := false
+		for _, node := range result {
+			if neighbour == node {
+				duplicate = true
+			}
+		}
+		if !duplicate {
+			result = append(result, neighbour)
+		}
+	}
+
+	return result
 }
 
 // CanReachLabel_MaxDepth expects a label and a maximal search depth.
