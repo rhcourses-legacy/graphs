@@ -25,7 +25,7 @@ func TestNode_NeighboursMaxDistance(t *testing.T) {
 }
 
 // TestNode_CanReachLabel_MaxDepth tests the CanReachLabel_MaxDepth method.
-func TestNode_CanReachLabel(t *testing.T) {
+func TestNode_CanReachLabel_MaxDepth(t *testing.T) {
 	gt := GraphTester{t}
 
 	n := NewNode("A")
