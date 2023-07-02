@@ -2,41 +2,46 @@ package graphs
 
 import "testing"
 
-// compareLabels compares the labels of a slice of nodes to a slice of strings.
-// It returns true if the labels are equal, false otherwise.
-func compareLabels(nodes []*Node, labels []string) bool {
-	if len(nodes) != len(labels) {
-		return false
-	}
-	for i, n := range nodes {
-		if n.Label != labels[i] {
-			return false
-		}
-	}
-	return true
-}
-
-// Helper struct for encapsulating test data that is required repeatedly
-// when checking properties of a node.
+// Helper struct encapsulating a *testing.T object.
+// Provides methods for checking graph properties.
 type GraphTester struct {
-	n *Node
 	t *testing.T
 }
 
-// assertReachable_maxdist expects a label and a maximum distance md.
+// assertNodesHaveLabels expects a list of nodes and some strings.
+// Checks that the nodes have the given strings as labels (in that order).
+// Produces a test failure if not.
+func (gt *GraphTester) assertNodesHaveLabels(nodes []*Node, expectedlabels ...string) {
+	actuallabels := []string{}
+	for _, node := range nodes {
+		actuallabels = append(actuallabels, node.Label)
+	}
+	if len(actuallabels) != len(expectedlabels) {
+		gt.t.Errorf("Expected labels %v, got %v", expectedlabels, actuallabels)
+		return
+	}
+	for i, expectedlabel := range expectedlabels {
+		if expectedlabel != actuallabels[i] {
+			gt.t.Errorf("Expected labels %v, got %v", expectedlabels, actuallabels)
+			return
+		}
+	}
+}
+
+// assertReachable_maxdist expects a Node, a label and a maximum distance md.
 // Checks if a node with the givel label can be reached in at most md steps.
 // If not, produces a test failure.
-func (gt GraphTester) assertReachable_maxdist(label string, md int) {
-	if !gt.n.CanReachLabel_MaxDepth(label, md) {
+func (gt *GraphTester) assertReachable_maxdist(n *Node, label string, md int) {
+	if !n.CanReachLabel_MaxDepth(label, md) {
 		gt.t.Errorf("Expected node %s to be reachable with max depth %d.", label, md)
 	}
 }
 
-// assertReachable_maxdist expects a label and a maximum distance md.
+// assertReachable_maxdist expects a Node, a label and a maximum distance md.
 // Checks if a node with the givel label cannot be reached in at most md steps.
 // If it can be reached, produces a test failure.
-func (gt GraphTester) assertUnreachable_maxdist(label string, md int) {
-	if gt.n.CanReachLabel_MaxDepth(label, md) {
+func (gt *GraphTester) assertUnreachable_maxdist(n *Node, label string, md int) {
+	if n.CanReachLabel_MaxDepth(label, md) {
 		gt.t.Errorf("Expected node %s not to be reachable with max depth %d.", label, md)
 	}
 }
