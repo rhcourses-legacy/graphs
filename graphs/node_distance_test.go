@@ -45,31 +45,16 @@ func TestNode_CanReachLabel(t *testing.T) {
 	C.AddNeighbour("F")
 	C.AddNeighbour("G")
 
-	if !n.CanReachLabel_MaxDepth("A", 0) {
-		t.Errorf("Expected node A to be reachable with max depth 0.")
-	}
-	if !n.CanReachLabel_MaxDepth("B", 1) {
-		t.Errorf("Expected node B to be reachable with max depth 1.")
-	}
-	if !n.CanReachLabel_MaxDepth("C", 1) {
-		t.Errorf("Expected node C to be reachable with max depth 1.")
-	}
-	if !n.CanReachLabel_MaxDepth("D", 2) {
-		t.Errorf("Expected node E to be reachable with max depth 2.")
-	}
-	if !n.CanReachLabel_MaxDepth("E", 2) {
-		t.Errorf("Expected node E to be reachable with max depth 2.")
-	}
-	if !n.CanReachLabel_MaxDepth("F", 2) {
-		t.Errorf("Expected node F to be reachable with max depth 2.")
-	}
-	if !n.CanReachLabel_MaxDepth("G", 2) {
-		t.Errorf("Expected node G to be reachable with max depth 2.")
-	}
-	if n.CanReachLabel_MaxDepth("G", 1) {
-		t.Errorf("Expected node G not to be reachable with max depth 1.")
-	}
-	if n.CanReachLabel_MaxDepth("H", 2) {
-		t.Errorf("Expected node H not to be reachable with max depth 2.")
-	}
+	gt := GraphTester{n, t}
+
+	gt.assertReachable_maxdist("A", 0)
+	gt.assertReachable_maxdist("B", 1)
+	gt.assertReachable_maxdist("C", 1)
+	gt.assertReachable_maxdist("D", 2)
+	gt.assertReachable_maxdist("E", 2)
+	gt.assertReachable_maxdist("F", 2)
+	gt.assertReachable_maxdist("G", 2)
+
+	gt.assertUnreachable_maxdist("G", 1)
+	gt.assertUnreachable_maxdist("H", 2)
 }
