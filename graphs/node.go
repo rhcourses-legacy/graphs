@@ -36,10 +36,17 @@ func (n *Node) GetNeighbour(label string) *Node {
 // AddNeighbour adds a neighbour with a label to a node.
 // If a Neighbour with the same label already exists, it is not added.
 func (n *Node) AddNeighbour(label string) {
-	if n.GetNeighbour(label) != nil {
+	n.AddNeighbourNode(NewNode(label))
+}
+
+// AddNeighbourNode adds node m as a neighbour.
+// If a node with that label already exists, it is not added.
+// If m is nil, it is not added.
+func (n *Node) AddNeighbourNode(m *Node) {
+	if m == nil || n.GetNeighbour(m.Label) != nil {
 		return
 	}
-	n.Edges = append(n.Edges, *NewEdge(label))
+	n.Edges = append(n.Edges, *NewEdgeNode(m))
 }
 
 // NeighboursMaxDistance returns all neighbours of a node with a distance of at most maxDistance.

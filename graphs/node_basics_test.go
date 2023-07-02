@@ -71,3 +71,37 @@ func TestNode_AddNeighbour(t *testing.T) {
 		t.Errorf("Expected 2 neighbours, got %d", n.NeighbourCount())
 	}
 }
+
+// TestNode_AddNeighbourNode tests the AddNeighbourNode method.
+// It performs the same test as TestNode_AddNeighbour, but uses nodes instead of labels.
+// Additionally checks that an existing node isn't added twice.
+func TestNode_AddNeighbourNode(t *testing.T) {
+	gt := GraphTester{t}
+
+	a := NewNode("A")
+	b := NewNode("B")
+	c := NewNode("C")
+
+	a.AddNeighbourNode(b)
+	a.AddNeighbourNode(c)
+
+	B := a.GetNeighbour("B")
+	if B != b {
+		t.Errorf("Expected neighbour %v, got %v", b, B)
+	}
+
+	C := a.GetNeighbour("C")
+	if C != c {
+		t.Errorf("Expected neighbour %v, got %v", c, C)
+	}
+
+	gt.assertNeighbourCountEquals(a, 2)
+	gt.assertNeighbourCountEquals(b, 0)
+	gt.assertNeighbourCountEquals(c, 0)
+
+	a.AddNeighbourNode(c)
+	C2 := a.GetNeighbour("C")
+	if C2 != c {
+		t.Errorf("Expected neighbour %v, got %v", c, C2)
+	}
+}
