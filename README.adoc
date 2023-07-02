@@ -1,11 +1,36 @@
 = Graphen
 
-Im Package graphs sind Datentypen für Knoten und Kanten in Graphen definiert.
+Im Package ``graphs`` sind Datentypen für Knoten und Kanten in Graphen definiert.
 
-== Weitere Aufgaben
+== Basis-Aufgaben
 
-* Tests erweitern, so dass die Funktionen mit Graphen geprüft werden, die Kreise enthalten.
-  Funktionen anpassen, so dass immer noch alles funktioniert.
-* Knoten suchen, die mindestens n Nachbarn haben.
-* Erreichbarkeit verallgemeinern (ohne maximale Tiefe).
-* (Kürzeste) Wege suchen.
+Die Basis-Aufgaben sind durch die Tests in den Dateien
+``node_basics_test.go`` und ``node_distance_test.go`` beschrieben.
+Diese Aufgaben behandeln die grundsätzlichen Methoden für Graphen.
+Die Graphen, die in den Tests verwendet werden, sind verhältnismäßig einfach.
+
+* Bringen Sie die Tests aus der Datei `node_basics_test.go` zum Laufen
+* Bringen Sie die Tests aus der Datei `node_distance_test.go` zum Laufen.
+
+== Fortgeschrittene Aufgaben
+
+In den Tests in der Date ``node_distance_cycles_test.go`` werden Graphen
+mit Zyklen verwendet. Diese Graphen sind komplexer als die Graphen in den
+Basis-Aufgaben und einige der Methoden funktionieren nicht mehr, falls sie vorher
+minimalistisch implementiert wurden.
+
+* Bringen Sie die Tests aus der Datei ``node_distance_cycles_test.go`` zum Laufen.
+
+== Zusatzaufgaben
+
+Im Folgenden sind weitere Ideen für Funktionen beschrieben, die man an einem Graphen implementieren kann.
+Für diese Aufgaben gibt es keine Tests und keine Lösungen, Sie müssen ggf. selbst welche schreiben.
+
+* Schreiben Sie eine Methode, die in einem Graphen Knoten sucht, die mindestens ``n`` Nachbarn haben.
+* Schreiben Sie eine Methode, die für zwei Knoten den kürzesten Weg bestimmt, der diese Knoten verbindet.
+  *Hinweis:* Ein bekannter Algorithmus für dieses Problem ist der *Dijkstra-Algorithmus*.
+* Schreiben Sie eine Methode, die für einen Graphen herausfindet, ob er ein Baum ist.
+  *Hinweis:* Ein Graph ist ein Baum, wenn er:
+    ** keine Zyklen enthält
+    ** jeder Knoten außer dem Wurzelknoten genau einen Vorgänger hat (also nur Nachbar eines Knotens ist)
+    ** alle Knoten durch Kanten verbunden sind
