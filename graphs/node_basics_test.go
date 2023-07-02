@@ -53,23 +53,18 @@ func TestNode_GetNeighbour(t *testing.T) {
 // It performs the same test as TestNode_GetNeighbour, but uses AddNeighbour to create the nodes.
 // Additionally checks that an existing label isn't added twice.
 func TestNode_AddNeighbour(t *testing.T) {
+	gt := GraphTester{t}
+
 	n := NewNode("A")
 	n.AddNeighbour("B")
 	n.AddNeighbour("C")
-	if n.GetNeighbour("B").Label != "B" {
-		t.Errorf("Expected neighbour B, got %v", n.GetNeighbour("B"))
-	}
-	C := n.GetNeighbour("C")
-	if C.Label != "C" {
-		t.Errorf("Expected neighbour C, got %v", n.GetNeighbour("C"))
-	}
+
+	gt.assertNeighbourHasCorrectLabel(n, "B")
+	gt.assertNeighbourHasCorrectLabel(n, "C")
+
 	n.AddNeighbour("C")
-	if C.Label != "C" {
-		t.Errorf("Expected neighbour C, got %v", n.GetNeighbour("C"))
-	}
-	if n.NeighbourCount() != 2 {
-		t.Errorf("Expected 2 neighbours, got %d", n.NeighbourCount())
-	}
+	gt.assertNeighbourHasCorrectLabel(n, "C")
+	gt.assertNeighbourCountEquals(n, 2)
 }
 
 // TestNode_AddNeighbourNode tests the AddNeighbourNode method.
@@ -85,23 +80,13 @@ func TestNode_AddNeighbourNode(t *testing.T) {
 	a.AddNeighbourNode(b)
 	a.AddNeighbourNode(c)
 
-	B := a.GetNeighbour("B")
-	if B != b {
-		t.Errorf("Expected neighbour %v, got %v", b, B)
-	}
-
-	C := a.GetNeighbour("C")
-	if C != c {
-		t.Errorf("Expected neighbour %v, got %v", c, C)
-	}
+	gt.assertNeighbourIsNode(a, b, "B")
+	gt.assertNeighbourIsNode(a, c, "C")
 
 	gt.assertNeighbourCountEquals(a, 2)
 	gt.assertNeighbourCountEquals(b, 0)
 	gt.assertNeighbourCountEquals(c, 0)
 
 	a.AddNeighbourNode(c)
-	C2 := a.GetNeighbour("C")
-	if C2 != c {
-		t.Errorf("Expected neighbour %v, got %v", c, C2)
-	}
+	gt.assertNeighbourIsNode(a, c, "C")
 }
