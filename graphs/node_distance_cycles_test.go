@@ -40,3 +40,23 @@ func TestNode_CanReachLabel_MaxDepth_cycles(t *testing.T) {
 	gt.assertReachable_maxdist(a, "B", 1)
 	gt.assertReachable_maxdist(a, "C", 2)
 }
+
+// TestNode_CanReachLabel_MaxDepth tests the CanReachLabel_MaxDepth method.
+// For testing, it uses a graph that contains cycles.
+func TestNode_CanReachLabel_cycles(t *testing.T) {
+	gt := GraphTester{t}
+
+	a := NewNode("A")
+	b := NewNode("B")
+	c := NewNode("C")
+
+	a.AddNeighbourNode(b)
+	b.AddNeighbourNode(c)
+	c.AddNeighbourNode(a)
+
+	gt.assertReachable(a, "A")
+	gt.assertReachable(a, "B")
+	gt.assertReachable(a, "C")
+	gt.assertUnreachable(a, "D")
+
+}

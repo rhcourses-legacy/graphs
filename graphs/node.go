@@ -94,3 +94,22 @@ func (n *Node) CanReachLabel_MaxDepth(label string, maxDepth int) bool {
 	}
 	return false
 }
+
+// CanReachLabel expects a label.
+// returns true if a node with that label is reachable in any number of steps.
+func (n *Node) CanReachLabel(label string) bool {
+	lastneighbours := []*Node{}
+	currentneighbours := n.NeighboursMaxDistance(1)
+
+	for depth := 2; len(lastneighbours) != len(currentneighbours); depth++ {
+		lastneighbours = currentneighbours
+		currentneighbours = n.NeighboursMaxDistance(depth)
+	}
+
+	for _, node := range currentneighbours {
+		if node.Label == label {
+			return true
+		}
+	}
+	return false
+}

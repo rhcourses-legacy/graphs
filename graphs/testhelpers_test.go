@@ -104,3 +104,21 @@ func (gt *GraphTester) assertUnreachable_maxdist(n *Node, label string, md int) 
 		gt.t.Errorf("Expected node %s not to be reachable with max depth %d.", label, md)
 	}
 }
+
+// assertReachable expects a node and a label.
+// Checks if a node with the givel label can be reached in any number of steps.
+// If not, produces a test failure.
+func (gt *GraphTester) assertReachable(n *Node, label string) {
+	if !n.CanReachLabel(label) {
+		gt.t.Errorf("Expected node %s to be reachable.", label)
+	}
+}
+
+// assertUnreachable expects a node and a label.
+// Checks if a node with the givel label can be reached in any number of steps.
+// If not, produces a test failure.
+func (gt *GraphTester) assertUnreachable(n *Node, label string) {
+	if n.CanReachLabel(label) {
+		gt.t.Errorf("Expected node %s to be unreachable.", label)
+	}
+}
