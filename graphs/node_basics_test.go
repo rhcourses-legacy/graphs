@@ -41,8 +41,8 @@ func TestNode_NeighbourCount(t *testing.T) {
 func TestNode_GetNeighbour(t *testing.T) {
 	gt := GraphTester{t}
 	n := NewNode("A")
-	n.Edges = append(n.Edges, *NewEdge("B"))
-	n.Edges = append(n.Edges, *NewEdge("C"))
+	n.neighbours = append(n.neighbours, NewNode("B"))
+	n.neighbours = append(n.neighbours, NewNode("C"))
 
 	gt.assertNeighbourHasCorrectLabel(n, "B")
 	gt.assertNeighbourHasCorrectLabel(n, "C")
